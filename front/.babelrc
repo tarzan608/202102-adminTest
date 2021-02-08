@@ -1,0 +1,6 @@
+{
+    "presets": ["@babel/env", "@babel/preset-typescript", "@babel/preset-react"],
+    "plugins": [
+      ["import", { "libraryName": "antd", "libraryDirectory": "lib" }, "ant"]
+    ]
+}

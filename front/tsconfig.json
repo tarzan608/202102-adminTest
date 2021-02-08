@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./public/", // 아웃풋 될 경로
+    "noImplicitAny": true,
+    "moduleResolution": "classic",
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "experimentalDecorators": true,
+    "allowJs": true, // .js 파일도 함께 컴파일 할지 
+    "moduleResolution": "node",
+    "resolveJsonModule": true
+  },
+  // "include": [
+  //   "src/**/**/*"
+  // ],
+  "exclude": [
+      "node_modules",
+  ]
+}

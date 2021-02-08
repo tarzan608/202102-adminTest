@@ -1,0 +1,54 @@
+import * as React from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu } from 'antd';
+import Avatar from './Avatar';
+
+import './Header.css';
+
+const Header = () => {
+  const [focusMenu, setFousMenu] = useState(
+    window.location.pathname === '/'
+      ? ''
+      : window.location.pathname.substring(1, window.location.pathname.length)
+  );
+
+  const onHandleClick = (e: any) => {
+    setFousMenu(e.key);
+  };
+
+  return (
+    <>
+      <div id="header">
+        <Menu
+          onClick={onHandleClick}
+          selectedKeys={[focusMenu]}
+          mode="horizontal"
+        >
+          <Menu.Item key="logo">
+            <Link to="/Main">
+              {/* <img style={{ width: '100px' }} src="#" /> */}
+              <span style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                관리자
+              </span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="user">
+            <Link to="/user">회원관리</Link>
+          </Menu.Item>
+          <Menu.Item key="store">
+            <Link to="/store">상점관리</Link>
+          </Menu.Item>
+          <Menu.Item key="product">
+            <Link to="/product">상품관리</Link>
+          </Menu.Item>
+        </Menu>
+        <div className="header-avatar">
+          <Avatar />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Header;

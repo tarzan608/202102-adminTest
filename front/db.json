@@ -1,0 +1,15 @@
+{
+  "userData": {
+    "totalCount": 1,
+    "userList": [
+      {
+        "key": "1",
+        "userId": "admin",
+        "name": "관리자",
+        "email": "email",
+        "store": "삼성전자",
+        "createdAt": "2021-02-08T05:26:09.000Z"
+      }
+    ]
+  }
+}
