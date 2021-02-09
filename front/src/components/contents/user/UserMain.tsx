@@ -2,10 +2,10 @@ import * as React from 'react';
 import * as moment from 'moment';
 import HeaderComponent from '../../header/Header';
 import {
-  userListAPI,
-  updateUserAPI,
-  deleteUserAPI,
-} from '../../../api/UserAPI';
+  memberListAPI,
+  updateMemberAPI,
+  deleteMemberAPI,
+} from '../../../api/MemberAPI';
 import UpdateMain from './UpdateMain';
 import { Layout, Table, Input, Button, Modal, message, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -21,6 +21,7 @@ const { Column } = Table;
 const UserMain = () => {
   const dataSource = database.userData.userList;
   const [list, setList] = React.useState(dataSource);
+  const [total, setTotal] = React.useState();
   const [checkData, setCheckData] = React.useState([]);
 
   const rowSelection = {
@@ -73,7 +74,7 @@ const UserMain = () => {
           icon: <ExclamationCircleOutlined />,
           content: <div>정말 삭제하시겠습니까?</div>,
           onOk() {
-            deleteUserAPI(checkData, async function (res: any) {
+            deleteMemberAPI(checkData, async function (res: any) {
               await setRefresh(!refresh);
               await message.success('삭제되었습니다.');
             });
@@ -91,7 +92,7 @@ const UserMain = () => {
 
       switch (mode) {
         case 'updateUser':
-          updateUserAPI(data, async function () {
+          updateMemberAPI(data, async function () {
             await setConfirmLoading(false);
             await setVisible({ ...visible, updateUser: false });
             await setRefresh(!refresh);
@@ -115,16 +116,16 @@ const UserMain = () => {
   }, [visible]);
 
   const updateMe = () => {
-    console.log('들어오나?');
     setRefresh(!refresh);
   };
 
   React.useEffect(() => {
-    userListAPI(option, async function (res: any) {
+    memberListAPI(option, async function (res: any, total: any) {
       await res.map((user: any) => {
         user.key = user.userId;
         user.createdAt = moment(user.createdAt).format('YYYY-MM-DD');
       });
+      await setTotal(total);
 
       // const sortList = res.filter((user:any) => user.status === '');
 
@@ -177,7 +178,7 @@ const UserMain = () => {
                     ...rowSelection,
                   }}
                   dataSource={list}
-                  pagination={{ pageSize: option.perPage }}
+                  pagination={{ pageSize: option.perPage, total: total }}
                   onChange={onPageChange}
                   onRow={(record, rowIndex) => {
                     return {
