@@ -6,7 +6,7 @@ export const LoginAPI = function (loginData: any) {
     url: 'http://localhost:8001/api/login',
     data: loginData,
   }).then(function (response) {
-    console.log('🚀 ~ file: noticeAPI.js ~ line 11 ~ response', response);
+    console.log('🚀 로그인 결과: ', response);
   });
 };
 
@@ -16,7 +16,7 @@ export const RegisterAPI = function (registartData: any, callback: any) {
     url: 'http://localhost:8001/api/register',
     data: registartData,
   }).then(function (response) {
-    console.log('🚀결과 값: ', response);
+    console.log('🚀회원가입 결과: ', response);
     callback(response.data);
   });
 };

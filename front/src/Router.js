@@ -5,6 +5,7 @@ import SignUp from './containers/SignUp.tsx';
 import User from './containers/User.tsx';
 import Store from './containers/Store.tsx';
 import Product from './containers/Product.tsx';
+import Admin from './containers/Admin.tsx';
 import Error from './components/error/Error';
 import { useSelector } from 'react-redux';
 
@@ -21,6 +22,9 @@ const Router = () => {
           <>
             <Route exact path="/" component={User} />
             <Route exact path="/user" component={User} />
+            <Route exact path="/store" component={Store} />
+            <Route exact path="/product" component={Product} />
+            <Route exact path="/admin" component={Admin} />
             <Route exact path="/error" component={Error} />
             <Redirect exact path="/*" to="/" />
           </>

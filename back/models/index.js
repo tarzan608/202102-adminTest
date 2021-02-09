@@ -11,6 +11,7 @@ const sequelize = new Sequelize(
 );
 
 db.USER = require('./user')(sequelize, Sequelize);
+db.MEMBER = require('./member')(sequelize, Sequelize);
 db.STORE = require('./store')(sequelize, Sequelize);
 db.PRODUCT = require('./product')(sequelize, Sequelize);
 

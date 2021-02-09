@@ -6,7 +6,7 @@ import Avatar from './Avatar';
 
 import './Header.css';
 
-const Header = () => {
+const Header = (userRefresh: any) => {
   const [focusMenu, setFousMenu] = useState(
     window.location.pathname === '/'
       ? ''
@@ -42,9 +42,16 @@ const Header = () => {
           <Menu.Item key="product">
             <Link to="/product">상품관리</Link>
           </Menu.Item>
+          <Menu.Item key="admin">
+            <Link to="/admin">관리자관리</Link>
+          </Menu.Item>
         </Menu>
         <div className="header-avatar">
-          <Avatar />
+          <Avatar
+            userRefresh={(res: any) => {
+              console.log('들어왔다!', res);
+            }}
+          />
         </div>
       </div>
     </>
