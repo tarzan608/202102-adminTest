@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const memberListAPI = function (options: any, callback: any) {
+  console.log('🚀 옵션: ', options);
   axios({
     method: 'post',
     url: 'http://localhost:8001/api/member',

@@ -1,3 +1,7 @@
 .ant-layout-content {
   padding: 5% !important;
 }
+
+.ant-modal-footer {
+  display: none;
+}

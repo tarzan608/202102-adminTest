@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Menu, Dropdown, Avatar, Modal, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import UpdateMain from './UpdateMain';
-import { updateUserAPI } from '../../api/UserAPI';
+import { updateMemberAPI } from '../../api/MemberAPI';
 
 const HeaderAvatar = (userRefresh: any) => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const HeaderAvatar = (userRefresh: any) => {
   };
   const handleOk = async (data: any) => {
     await setConfirmLoading(true);
-    await updateUserAPI(data, async function () {
+    await updateMemberAPI(data, async function () {
       await setConfirmLoading(false);
       await setVisible({ ...visible, updateUser: false });
       await userRefresh();

@@ -39,7 +39,10 @@ const UserMain = () => {
     }),
   };
   const [option, setOption] = React.useState({
-    page: 1,
+    page: {
+      current: 1,
+      pageSize: 10,
+    },
     perPage: 10,
     search: '',
   });
