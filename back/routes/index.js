@@ -102,6 +102,7 @@ router.post('/api/logout', (req, res) => {
 
 router.post('/api/member', (req, res, next) => {
   const { page, perPage, search } = req.body;
+  console.log('🚀reqzxcxaa@@@: ', page, perPage, search);
   try {
     const total = MEMBER.findAll({
       where: {
@@ -118,7 +119,7 @@ router.post('/api/member', (req, res, next) => {
             },
           },
           limit: perPage, // 출력할 행의 수
-          offset: page === 1 ? 0 : (page - 1) * perPage, // 몇번째 row부터 출력할 지. (1번째 row면 0)
+          offset: page.current === 1 ? 0 : (page.current - 1) * perPage, // 몇번째 row부터 출력할 지. (1번째 row면 0)
         })
           .then(response => {
             if (response.length > 0) {
