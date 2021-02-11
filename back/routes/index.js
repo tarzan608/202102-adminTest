@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const { USER, MEMBER, STORE } = require('../models');
+const { USER, MEMBER, STORE, PRODUCT } = require('../models');
 
 const router = express.Router();
 const Sequelize = require('sequelize');
@@ -312,6 +312,163 @@ router.post('/api/store/delete', async (req, res, next) => {
     for (let value of req.body) {
       STORE.destroy({
         where: { storeId: value.storeId },
+      });
+    }
+    return res.status(200).json('성공');
+  } catch (e) {
+    next(e);
+  }
+});
+
+/* 상품 관련(조회) */
+
+router.post('/api/product', (req, res, next) => {
+  const { page, perPage, search } = req.body;
+  try {
+    const total = PRODUCT.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${search}%`,
+        },
+      },
+    })
+      .then(total => {
+        const product = PRODUCT.findAll({
+          where: {
+            name: {
+              [Op.like]: `%${search}%`,
+            },
+          },
+          limit: perPage, // 출력할 행의 수
+          offset: page.current === 1 ? 0 : (page.current - 1) * perPage, // 몇번째 row부터 출력할 지. (1번째 row면 0)
+        })
+          .then(response => {
+            if (response.length > 0) {
+              return res.status(200).json({
+                data: response,
+                total: total.length,
+              });
+            } else {
+              return res.status(200).json();
+            }
+          })
+          .catch(err => {
+            return res.status(500).json(err);
+          });
+      })
+      .catch(err => {
+        return res.status(500).json(err);
+      });
+  } catch (e) {
+    next(e);
+  }
+});
+
+/* 상품 관련(추가) */
+
+router.post('/api/product/create', async (req, res, next) => {
+  const {
+    productId,
+    name,
+    price,
+    discount,
+    content,
+    brand,
+    category,
+    tag,
+    quantity,
+    img,
+  } = req.body;
+
+  try {
+    const productCheck = await PRODUCT.findOne({ where: { name } }).then(
+      check => {
+        if (check) {
+          req.flash('createError', '이미 존재하는 상품입니다.');
+          return res.status(401).json({
+            result: 'FAILURE',
+            message: '이미 존재하는 상품입니다.',
+          });
+        } else {
+          STORE.create({
+            productId,
+            name,
+            price,
+            discount,
+            content,
+            brand,
+            category,
+            tag,
+            quantity,
+            img,
+          })
+            .then(response => {
+              return res.status(200).json(response);
+            })
+            .catch(err => {
+              return res.status(500).json(err);
+            });
+        }
+      }
+    );
+  } catch (e) {
+    next(e);
+  }
+});
+
+/* 상품 관련(수정) */
+
+router.post('/api/product/update/:id', async (req, res, next) => {
+  const {
+    productId,
+    name,
+    price,
+    discount,
+    content,
+    brand,
+    category,
+    tag,
+    quantity,
+    img,
+  } = req.body;
+
+  try {
+    STORE.update(
+      {
+        productId,
+        name,
+        price,
+        discount,
+        content,
+        brand,
+        category,
+        tag,
+        quantity,
+        img,
+      },
+      {
+        where: { productId },
+      }
+    )
+      .then(response => {
+        return res.status(200).json(response);
+      })
+      .catch(err => {
+        return res.status(500).json(err);
+      });
+  } catch (e) {
+    next(e);
+  }
+});
+
+/* 상품 관련(삭제) */
+
+router.post('/api/product/delete', async (req, res, next) => {
+  try {
+    console.log('');
+    for (let value of req.body) {
+      STORE.destroy({
+        where: { productId: value.productId },
       });
     }
     return res.status(200).json('성공');
