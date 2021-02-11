@@ -14,6 +14,9 @@ const UpdateMain = (props: any) => {
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
+    values.storeId =
+      Math.random().toString(36).substr(2, 11) +
+      Math.random().toString(36).substr(2, 11);
     onUpdate(values);
   };
 

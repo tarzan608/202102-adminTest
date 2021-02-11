@@ -232,8 +232,9 @@ router.post('/api/store', (req, res, next) => {
 
 /* 상점 관련(추가) */
 
-router.post('/api/store/create/:businessNum', async (req, res, next) => {
+router.post('/api/store/create', async (req, res, next) => {
   const {
+    storeId,
     storeName,
     storeCode,
     userName,
@@ -253,6 +254,7 @@ router.post('/api/store/create/:businessNum', async (req, res, next) => {
           });
         } else {
           STORE.create({
+            storeId,
             storeName,
             storeCode,
             userName,
@@ -277,7 +279,7 @@ router.post('/api/store/create/:businessNum', async (req, res, next) => {
 /* 상점 관련(수정) */
 
 router.post('/api/store/update/:id', async (req, res, next) => {
-  const { storeName, userName, address, tel } = req.body;
+  const { storeId, storeName, userName, address, tel } = req.body;
 
   try {
     STORE.update(
@@ -288,7 +290,7 @@ router.post('/api/store/update/:id', async (req, res, next) => {
         tel,
       },
       {
-        where: { storeName },
+        where: { storeId },
       }
     )
       .then(response => {
@@ -306,9 +308,10 @@ router.post('/api/store/update/:id', async (req, res, next) => {
 
 router.post('/api/store/delete', async (req, res, next) => {
   try {
+    console.log('');
     for (let value of req.body) {
       STORE.destroy({
-        where: { storeName: value.storeName },
+        where: { storeId: value.storeId },
       });
     }
     return res.status(200).json('성공');

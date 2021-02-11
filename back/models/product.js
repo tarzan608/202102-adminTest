@@ -2,6 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const PRODUCT = sequelize.define(
     'product',
     {
+      productId: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+        unique: true,
+      },
       name: {
         type: DataTypes.STRING(20),
         allowNull: false,

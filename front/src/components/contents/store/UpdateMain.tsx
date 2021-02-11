@@ -13,6 +13,7 @@ const UpdateMain = (props: any) => {
   const { onUpdate, dataSource } = props;
   const [form] = Form.useForm();
   const [detailData, setDetailData] = React.useState({
+    storeId: dataSource.storeId,
     storeName: dataSource.storeName,
     userName: dataSource.userName,
     address: dataSource.address,
@@ -21,6 +22,7 @@ const UpdateMain = (props: any) => {
   });
 
   const onFinish = (values: any) => {
+    values.storeId = detailData.storeId;
     onUpdate(values);
   };
 

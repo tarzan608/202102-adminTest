@@ -4,6 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('stores', [
       {
+        storeId: 'amdo132mdo1245',
         storeName: 'zardins',
         storeCode: 'test',
         userName: '홍길동',
@@ -14,6 +15,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        storeId: 'amdo121mdo1245',
         storeName: '자뎅',
         storeCode: 'testcode',
         userName: '손흥민',
@@ -24,6 +26,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        storeId: 'amdo132mdo1266',
         storeName: '무신사',
         storeCode: 'code',
         userName: '박지성',

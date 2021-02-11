@@ -162,7 +162,7 @@ const UserMain = () => {
               </div>
               <div className="content-table-box">
                 <Modal
-                  title="관리자 수정"
+                  title="회원정보 수정"
                   visible={visible.updateUser}
                   confirmLoading={confirmLoading}
                   onCancel={handleCancel}

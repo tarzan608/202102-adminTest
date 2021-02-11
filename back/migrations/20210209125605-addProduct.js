@@ -4,6 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('products', [
       {
+        productId: 'a2do132mdo1245',
         name: '축구유니폼',
         price: '50000',
         discount: '0',
@@ -17,6 +18,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amd6132mdo1245',
         name: '농구유니폼',
         price: '50000',
         discount: '0',
@@ -30,6 +32,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'am33132mdo1245',
         name: '야구유니폼',
         price: '50000',
         discount: '0',
@@ -43,6 +46,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amdo132mdo1045',
         name: '프롬미 기모 맨투맨',
         price: '27000',
         discount: '0',
@@ -56,6 +60,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amd1132mdo1245',
         name: '양기모 와이드 팬츠',
         price: '34000',
         discount: '0',
@@ -69,6 +74,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amdo162mdo1245',
         name: '블랙쉬 울 자켓',
         price: '79000',
         discount: '0',
@@ -82,6 +88,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amdo172mdo1245',
         name: '콜리지 기모 맨투맨',
         price: '31000',
         discount: '0',
@@ -95,6 +102,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amdo182mdo1245',
         name: '테비 버튼 니트',
         price: '47000',
         discount: '0',
@@ -108,6 +116,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amdo192mdo1245',
         name: '워싱 터치 기모 후드',
         price: '48000',
         discount: '0',
@@ -121,6 +130,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amdo111mdo1245',
         name: '앙고라 스트라이프 니트',
         price: '49000',
         discount: '0',
@@ -134,6 +144,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amdo122mdo1245',
         name: '클래식 바버 패딩 자켓 1',
         price: '108000',
         discount: '0',
@@ -148,6 +159,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amdo132mdo1211',
         name: '프레셔 오버핏 더블 울 코트',
         price: '134000',
         discount: '0',
@@ -161,6 +173,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amdo132mdo1242',
         name: '맥스 롱 와이드 스랙스',
         price: '33000',
         discount: '0',
@@ -174,6 +187,7 @@ module.exports = {
         updatedAt: '2021-02-09 12:41:49',
       },
       {
+        productId: 'amdo132mdo1245',
         name: '노스페이스 바람막이',
         price: '150000',
         discount: '0',

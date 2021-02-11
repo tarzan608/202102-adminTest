@@ -78,7 +78,7 @@ const StoreMain = () => {
         setUpdateDATA(record);
         setVisible({ ...visible, updateStore: true });
         break;
-      case 'deleteUser':
+      case 'deleteStore':
         confirm({
           icon: <ExclamationCircleOutlined />,
           content: <div>정말 삭제하시겠습니까?</div>,
@@ -175,7 +175,7 @@ const StoreMain = () => {
                 <Button onClick={() => showModal('createStore', 'test')}>
                   추가하기
                 </Button>
-                <Button onClick={() => showModal('deleteUser', 'test')}>
+                <Button onClick={() => showModal('deleteStore', 'test')}>
                   삭제하기
                 </Button>
               </div>
@@ -249,6 +249,12 @@ const StoreMain = () => {
                       <Space size="middle">
                         <a
                           onClick={() => {
+                            console.log(
+                              '텍스트 값: ',
+                              text,
+                              '데이터 값:',
+                              record
+                            );
                             showModal('updateStore', record);
                           }}
                         >
