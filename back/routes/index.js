@@ -492,6 +492,50 @@ router.post('/api/product/delete', async (req, res, next) => {
   }
 });
 
+/* 관리자 관련(조회) */
+
+router.post('/api/user', (req, res, next) => {
+  const { page, perPage, search } = req.body;
+  try {
+    const total = USER.findAll({
+      where: {
+        userId: {
+          [Op.like]: `%${search}%`,
+        },
+      },
+    })
+      .then(total => {
+        const user = USER.findAll({
+          where: {
+            userId: {
+              [Op.like]: `%${search}%`,
+            },
+          },
+          limit: perPage, // 출력할 행의 수
+          offset: page.current === 1 ? 0 : (page.current - 1) * perPage, // 몇번째 row부터 출력할 지. (1번째 row면 0)
+        })
+          .then(response => {
+            if (response.length > 0) {
+              return res.status(200).json({
+                data: response,
+                total: total.length,
+              });
+            } else {
+              return res.status(200).json();
+            }
+          })
+          .catch(err => {
+            return res.status(500).json(err);
+          });
+      })
+      .catch(err => {
+        return res.status(500).json(err);
+      });
+  } catch (e) {
+    next(e);
+  }
+});
+
 /* 관리자 관련(수정) */
 
 router.post('/api/user/update/:id', async (req, res, next) => {
@@ -516,6 +560,22 @@ router.post('/api/user/update/:id', async (req, res, next) => {
       .catch(err => {
         return res.status(500).json(err);
       });
+  } catch (e) {
+    next(e);
+  }
+});
+
+/* 관리자 관련(삭제) */
+
+router.post('/api/user/delete', async (req, res, next) => {
+  try {
+    console.log('');
+    for (let value of req.body) {
+      USER.destroy({
+        where: { userId: value.userId },
+      });
+    }
+    return res.status(200).json('성공');
   } catch (e) {
     next(e);
   }
