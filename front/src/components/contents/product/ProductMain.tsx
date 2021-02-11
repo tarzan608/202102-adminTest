@@ -13,16 +13,13 @@ import { Layout, Table, Input, Button, Modal, message, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import './ProductMain.css';
 
-import * as database from '../../../../db.json';
-
 const { Header, Footer, Content } = Layout;
 const { Search } = Input;
 const { confirm } = Modal;
 const { Column } = Table;
 
 const ProductMain = () => {
-  const dataSource = database.userData.userList;
-  const [list, setList] = React.useState(dataSource);
+  const [list, setList] = React.useState();
   const [total, setTotal] = React.useState();
   const [checkData, setCheckData] = React.useState([]);
 
@@ -36,7 +33,7 @@ const ProductMain = () => {
       setCheckData(selectedRows);
     },
     getCheckboxProps: (record: any) => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      disabled: record.name === 'Disabled Product', // Column configuration not to be checked
       name: record.name,
     }),
   };
@@ -49,8 +46,8 @@ const ProductMain = () => {
     search: '',
   });
   const [visible, setVisible] = React.useState({
-    createStore: false,
-    updateStore: false, //사용자 수정
+    createProduct: false,
+    updateProduct: false, //상품 수정
   });
   const [refresh, setRefresh] = React.useState(false); //목록 다시 가져오기
   const [updateDATA, setUpdateDATA] = React.useState();
@@ -71,12 +68,12 @@ const ProductMain = () => {
 
   const showModal = (mode: string, record: any) => {
     switch (mode) {
-      case 'createStore': // 상품 수정
-        setVisible({ ...visible, createStore: true });
+      case 'createProduct': // 상품 수정
+        setVisible({ ...visible, createProduct: true });
         break;
-      case 'updateStore': // 상품 수정
+      case 'updateProduct': // 상품 수정
         setUpdateDATA(record);
-        setVisible({ ...visible, updateStore: true });
+        setVisible({ ...visible, updateProduct: true });
         break;
       case 'deleteStore':
         confirm({
@@ -100,19 +97,19 @@ const ProductMain = () => {
       setConfirmLoading(true);
 
       switch (mode) {
-        case 'createStore':
+        case 'createProduct':
           createProductAPI(data, async function () {
             await setConfirmLoading(false);
-            await setVisible({ ...visible, createStore: false });
+            await setVisible({ ...visible, createProduct: false });
             await setRefresh(!refresh);
           });
           message.success('성공적으로 추가되었습니다.');
           break; //상품 수정
 
-        case 'updateStore':
+        case 'updateProduct':
           updateProductAPI(data, async function () {
             await setConfirmLoading(false);
-            await setVisible({ ...visible, updateStore: false });
+            await setVisible({ ...visible, updateProduct: false });
             await setRefresh(!refresh);
           });
           message.success('성공적으로 수정되었습니다.');
@@ -127,8 +124,8 @@ const ProductMain = () => {
 
   const handleCancel = React.useCallback(() => {
     setVisible({
-      createStore: false,
-      updateStore: false, //상품 수정
+      createProduct: false,
+      updateProduct: false, //상품 수정
     });
 
     message.error('취소되었습니다.');
@@ -140,13 +137,13 @@ const ProductMain = () => {
 
   React.useEffect(() => {
     productListAPI(option, async function (res: any, total: any) {
-      await res.map((user: any) => {
-        user.key = user.productId;
-        user.createdAt = moment(user.createdAt).format('YYYY-MM-DD');
+      await res.map((product: any) => {
+        product.key = product.productId;
+        product.createdAt = moment(product.createdAt).format('YYYY-MM-DD');
       });
       await setTotal(total);
 
-      // const sortList = res.filter((user:any) => user.status === '');
+      // const sortList = res.filter((product:any) => product.status === '');
 
       setList(res);
     });
@@ -159,7 +156,7 @@ const ProductMain = () => {
           <HeaderComponent userRefresh={updateMe} />
         </Header>
         <Content>
-          <div id="user-container" className="admin-content">
+          <div id="product-container" className="admin-content">
             <div className="nav-box">
               <div className="nav-title">
                 <h3>상품관리</h3>
@@ -172,7 +169,7 @@ const ProductMain = () => {
                   onSearch={onSearch}
                   style={{ width: 200 }}
                 />
-                <Button onClick={() => showModal('createStore', 'test')}>
+                <Button onClick={() => showModal('createProduct', 'test')}>
                   추가하기
                 </Button>
                 <Button onClick={() => showModal('deleteStore', 'test')}>
@@ -182,28 +179,28 @@ const ProductMain = () => {
               <div className="content-table-box">
                 <Modal
                   title="상품 추가"
-                  visible={visible.createStore}
+                  visible={visible.createProduct}
                   confirmLoading={confirmLoading}
                   onCancel={handleCancel}
                   destroyOnClose={true}
                 >
                   <CreateMain
                     onUpdate={(data: any) => {
-                      handleOk('createStore', data);
+                      handleOk('createProduct', data);
                     }}
                     dataSource={updateDATA}
                   />
                 </Modal>
                 <Modal
                   title="상품 수정"
-                  visible={visible.updateStore}
+                  visible={visible.updateProduct}
                   confirmLoading={confirmLoading}
                   onCancel={handleCancel}
                   destroyOnClose={true}
                 >
                   <UpdateMain
                     onUpdate={(data: any) => {
-                      handleOk('updateStore', data);
+                      handleOk('updateProduct', data);
                     }}
                     dataSource={updateDATA}
                   />
@@ -252,7 +249,7 @@ const ProductMain = () => {
                               '데이터 값:',
                               record
                             );
-                            showModal('updateStore', record);
+                            showModal('updateProduct', record);
                           }}
                         >
                           수정

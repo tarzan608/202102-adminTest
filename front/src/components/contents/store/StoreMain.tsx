@@ -13,16 +13,13 @@ import { Layout, Table, Input, Button, Modal, message, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import './StoreMain.css';
 
-import * as database from '../../../../db.json';
-
 const { Header, Footer, Content } = Layout;
 const { Search } = Input;
 const { confirm } = Modal;
 const { Column } = Table;
 
 const StoreMain = () => {
-  const dataSource = database.userData.userList;
-  const [list, setList] = React.useState(dataSource);
+  const [list, setList] = React.useState();
   const [total, setTotal] = React.useState();
   const [checkData, setCheckData] = React.useState([]);
 
@@ -36,7 +33,7 @@ const StoreMain = () => {
       setCheckData(selectedRows);
     },
     getCheckboxProps: (record: any) => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      disabled: record.name === 'Disabled Store', // Column configuration not to be checked
       name: record.name,
     }),
   };
@@ -140,13 +137,13 @@ const StoreMain = () => {
 
   React.useEffect(() => {
     storeListAPI(option, async function (res: any, total: any) {
-      await res.map((user: any) => {
-        user.key = user.storeName;
-        user.createdAt = moment(user.createdAt).format('YYYY-MM-DD');
+      await res.map((store: any) => {
+        store.key = store.storeName;
+        store.createdAt = moment(store.createdAt).format('YYYY-MM-DD');
       });
       await setTotal(total);
 
-      // const sortList = res.filter((user:any) => user.status === '');
+      // const sortList = res.filter((store:any) => store.status === '');
 
       setList(res);
     });
@@ -159,7 +156,7 @@ const StoreMain = () => {
           <HeaderComponent userRefresh={updateMe} />
         </Header>
         <Content>
-          <div id="user-container" className="admin-content">
+          <div id="store-container" className="admin-content">
             <div className="nav-box">
               <div className="nav-title">
                 <h3>상점관리</h3>
