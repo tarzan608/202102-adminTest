@@ -30,19 +30,33 @@ router.post('/api/register', async (req, res, next) => {
         message: '이미 존재하는 회원입니다.',
       });
     }
-    const hash = await bcrypt.hash(password, 12);
-    await USER.create({
-      userId,
-      name,
-      password: hash,
-      email,
-      store,
-      code,
+    const businessNumCheck = await STORE.findOne({
+      where: { storeName: store },
     });
-    return res.status(200).json({
-      result: 'SUCCESS',
-      message: '회원가입에 성공하였습니다.',
-    });
+    if (businessNumCheck) {
+      console.log('@@@', businessNumCheck);
+      if (businessNumCheck.storeCode === code) {
+        const hash = await bcrypt.hash(password, 12);
+        await USER.create({
+          userId,
+          name,
+          password: hash,
+          email,
+          store,
+          code,
+        });
+        return res.status(200).json({
+          result: 'SUCCESS',
+          message: '회원가입에 성공하였습니다.',
+        });
+      } else {
+        req.flash('createError', '상점코드가 불일치 합니다.');
+        return res.status(401).json({
+          result: 'FAILURE',
+          message: '상점코드가 불일치 합니다.',
+        });
+      }
+    }
   } catch (error) {
     return next(error);
   }

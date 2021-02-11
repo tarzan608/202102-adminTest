@@ -26,8 +26,7 @@ const Header = (userRefresh: any) => {
           mode="horizontal"
         >
           <Menu.Item key="logo">
-            <Link to="/Main">
-              {/* <img style={{ width: '100px' }} src="#" /> */}
+            <Link to="/user">
               <span style={{ fontSize: '20px', fontWeight: 'bold' }}>
                 관리자
               </span>
