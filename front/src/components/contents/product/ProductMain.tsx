@@ -106,7 +106,7 @@ const ProductMain = () => {
             await setVisible({ ...visible, createStore: false });
             await setRefresh(!refresh);
           });
-          message.success('성공적으로 수정되었습니다.');
+          message.success('성공적으로 추가되었습니다.');
           break; //상품 수정
 
         case 'updateStore':

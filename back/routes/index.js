@@ -367,6 +367,7 @@ router.post('/api/product', (req, res, next) => {
 /* 상품 관련(추가) */
 
 router.post('/api/product/create', async (req, res, next) => {
+  console.log('상품관련 정보: ', req.body);
   const {
     productId,
     name,
@@ -377,7 +378,7 @@ router.post('/api/product/create', async (req, res, next) => {
     category,
     tag,
     quantity,
-    img,
+    imgage,
   } = req.body;
 
   try {
@@ -390,7 +391,7 @@ router.post('/api/product/create', async (req, res, next) => {
             message: '이미 존재하는 상품입니다.',
           });
         } else {
-          STORE.create({
+          PRODUCT.create({
             productId,
             name,
             price,
@@ -400,7 +401,7 @@ router.post('/api/product/create', async (req, res, next) => {
             category,
             tag,
             quantity,
-            img,
+            imgage,
           })
             .then(response => {
               return res.status(200).json(response);
@@ -429,11 +430,11 @@ router.post('/api/product/update/:id', async (req, res, next) => {
     category,
     tag,
     quantity,
-    img,
+    imgage,
   } = req.body;
 
   try {
-    STORE.update(
+    PRODUCT.update(
       {
         productId,
         name,
@@ -444,7 +445,7 @@ router.post('/api/product/update/:id', async (req, res, next) => {
         category,
         tag,
         quantity,
-        img,
+        imgage,
       },
       {
         where: { productId },
@@ -467,7 +468,7 @@ router.post('/api/product/delete', async (req, res, next) => {
   try {
     console.log('');
     for (let value of req.body) {
-      STORE.destroy({
+      PRODUCT.destroy({
         where: { productId: value.productId },
       });
     }

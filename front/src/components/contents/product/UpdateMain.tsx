@@ -13,16 +13,19 @@ const UpdateMain = (props: any) => {
   const { onUpdate, dataSource } = props;
   const [form] = Form.useForm();
   const [detailData, setDetailData] = React.useState({
-    storeId: dataSource.storeId,
-    storeName: dataSource.storeName,
-    userName: dataSource.userName,
-    address: dataSource.address,
-    tel: dataSource.tel,
-    businessNum: dataSource.businessNum,
+    productId: dataSource.productId,
+    name: dataSource.name,
+    price: dataSource.price,
+    content: dataSource.content,
+    brand: dataSource.brand,
+    category: dataSource.category,
+    tag: dataSource.tag,
+    quantity: dataSource.quantity,
+    image: dataSource.image,
   });
 
   const onFinish = (values: any) => {
-    values.storeId = detailData.storeId;
+    values.productId = detailData.productId;
     onUpdate(values);
   };
 
@@ -38,24 +41,24 @@ const UpdateMain = (props: any) => {
           scrollToFirstError
         >
           <Form.Item
-            name="storeName"
+            name="name"
             label={
               <span>
-                상점명&nbsp;
-                <Tooltip title="상점명은 수정할 수 없습니다.">
+                상품명&nbsp;
+                <Tooltip title="상품명은 수정할 수 없습니다.">
                   <QuestionCircleOutlined />
                 </Tooltip>
               </span>
             }
           >
-            <Input readOnly />
+            <Input />
           </Form.Item>
           <Form.Item
-            name="userName"
+            name="price"
             label={
               <span>
-                대표자명&nbsp;
-                <Tooltip title="대표자명">
+                할인&nbsp;
+                <Tooltip title="할인">
                   <QuestionCircleOutlined />
                 </Tooltip>
               </span>
@@ -63,7 +66,7 @@ const UpdateMain = (props: any) => {
             rules={[
               {
                 required: true,
-                message: '대표자를 입력해주세요.',
+                message: '할인',
                 whitespace: true,
               },
             ]}
@@ -71,11 +74,11 @@ const UpdateMain = (props: any) => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="address"
+            name="content"
             label={
               <span>
-                주소&nbsp;
-                <Tooltip title="상점 주소">
+                내용&nbsp;
+                <Tooltip title="상품정보">
                   <QuestionCircleOutlined />
                 </Tooltip>
               </span>
@@ -83,7 +86,7 @@ const UpdateMain = (props: any) => {
             rules={[
               {
                 required: true,
-                message: '주소를 입력해주세요.',
+                message: '내용를 입력해주세요.',
                 whitespace: true,
               },
             ]}
@@ -91,11 +94,11 @@ const UpdateMain = (props: any) => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="tel"
+            name="brand"
             label={
               <span>
-                전화번호&nbsp;
-                <Tooltip title="전화번호를 입력해주세요.">
+                상호&nbsp;
+                <Tooltip title="상호를 입력해주세요.">
                   <QuestionCircleOutlined />
                 </Tooltip>
               </span>
@@ -103,7 +106,7 @@ const UpdateMain = (props: any) => {
             rules={[
               {
                 required: true,
-                message: '전화번호를 입력해주세요.',
+                message: '상호를 입력해주세요.',
                 whitespace: true,
               },
             ]}
@@ -111,11 +114,11 @@ const UpdateMain = (props: any) => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="businessNum"
+            name="category"
             label={
               <span>
-                사업자번호&nbsp;
-                <Tooltip title="사업자번호를 입력해주세요.">
+                카테고리&nbsp;
+                <Tooltip title="카테고리를 입력해주세요.">
                   <QuestionCircleOutlined />
                 </Tooltip>
               </span>
@@ -123,12 +126,72 @@ const UpdateMain = (props: any) => {
             rules={[
               {
                 required: true,
-                message: '사업자번호를 입력해주세요.',
+                message: '카테고리를 입력해주세요.',
                 whitespace: true,
               },
             ]}
           >
-            <Input readOnly />
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="tag"
+            label={
+              <span>
+                태그&nbsp;
+                <Tooltip title="태그를 입력해주세요.">
+                  <QuestionCircleOutlined />
+                </Tooltip>
+              </span>
+            }
+            rules={[
+              {
+                required: true,
+                message: '태그를 입력해주세요.',
+                whitespace: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="quantity"
+            label={
+              <span>
+                수량&nbsp;
+                <Tooltip title="수량을 입력해주세요.">
+                  <QuestionCircleOutlined />
+                </Tooltip>
+              </span>
+            }
+            rules={[
+              {
+                required: true,
+                message: '수량을 입력해주세요.',
+                whitespace: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="image"
+            label={
+              <span>
+                이미지&nbsp;
+                <Tooltip title="이미지를 입력해주세요.">
+                  <QuestionCircleOutlined />
+                </Tooltip>
+              </span>
+            }
+            rules={[
+              {
+                required: true,
+                message: '이미지를 입력해주세요.',
+                whitespace: true,
+              },
+            ]}
+          >
+            <Input />
           </Form.Item>
           <Form.Item name="submit-btn">
             <Button type="primary" htmlType="submit" style={{ float: 'right' }}>
