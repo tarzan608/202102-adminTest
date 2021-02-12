@@ -322,7 +322,6 @@ router.post('/api/store/update/:id', async (req, res, next) => {
 
 router.post('/api/store/delete', async (req, res, next) => {
   try {
-    console.log('');
     for (let value of req.body) {
       STORE.destroy({
         where: { storeId: value.storeId },
@@ -480,7 +479,6 @@ router.post('/api/product/update/:id', async (req, res, next) => {
 
 router.post('/api/product/delete', async (req, res, next) => {
   try {
-    console.log('');
     for (let value of req.body) {
       PRODUCT.destroy({
         where: { productId: value.productId },
@@ -569,7 +567,6 @@ router.post('/api/user/update/:id', async (req, res, next) => {
 
 router.post('/api/user/delete', async (req, res, next) => {
   try {
-    console.log('');
     for (let value of req.body) {
       USER.destroy({
         where: { userId: value.userId },
