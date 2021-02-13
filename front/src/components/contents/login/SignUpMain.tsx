@@ -2,18 +2,21 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import './Login.css';
-import { RegisterAPI } from '../../../api/loginAPI';
+import { RegisterAPI, duplicateCheckAPI } from '../../../api/loginAPI';
 import { message } from 'antd';
 
 const Registart = (props: any) => {
   const [registartData, setRegistartData] = React.useState({
     userId: '',
     password: '',
+    passwordCheck: '',
     name: '',
     email: '',
     store: '',
     code: '',
   });
+  const [idCheck, setIdCheck] = React.useState(null);
+  const [passwordCheck, setPasswordCheck] = React.useState(null);
   const onClick = () => {
     RegisterAPI(registartData, function (res: any) {
       if (res.result === 'SUCCESS') {
@@ -35,6 +38,16 @@ const Registart = (props: any) => {
       ...registartData,
       password: e.target.value,
     });
+  };
+  const onChangePwCheck = (e: any) => {
+    setRegistartData({
+      ...registartData,
+      passwordCheck: e.target.value,
+    });
+    console.log(registartData);
+    setPasswordCheck(
+      registartData.password === e.target.value ? 'SUCCESS' : 'FAILURE'
+    );
   };
   const onChangeName = (e: any) => {
     setRegistartData({
@@ -60,6 +73,15 @@ const Registart = (props: any) => {
       code: e.target.value,
     });
   };
+  const duplicateCheck = () => {
+    duplicateCheckAPI(registartData.userId, function (res: any) {
+      console.log('결과: ', res);
+      setIdCheck(res.result);
+    });
+  };
+  React.useEffect(() => {
+    console.log('리로딩!', idCheck === 'SUCCESS');
+  }, [idCheck]);
 
   return (
     <>
@@ -68,16 +90,36 @@ const Registart = (props: any) => {
           <div className="login-form">
             <input
               type="text"
+              id="signUp-id-input"
               name="userId"
               placeholder="아이디"
               onChange={onChangeId}
             />
+            <div id="signUp-idCheck" onClick={duplicateCheck}>
+              중복체크
+            </div>
+            {idCheck === 'SUCCESS' ? (
+              <p id="idCheck-success">사용 가능한 아이디입니다.</p>
+            ) : idCheck === 'FAILURE' ? (
+              <p id="idCheck-failure">이미 존재하는 아이디입니다.</p>
+            ) : null}
             <input
               type="password"
               name="password"
               placeholder="비밀번호"
               onChange={onChangePw}
             />
+            <input
+              type="password"
+              name="passwordCheck"
+              placeholder="비밀번호 확인"
+              onChange={onChangePwCheck}
+            />
+            {passwordCheck === 'SUCCESS' ? (
+              <p id="idCheck-success">비밀번호가 일치합니다.</p>
+            ) : passwordCheck === 'FAILURE' ? (
+              <p id="idCheck-failure">비밀번호가 불일치합니다.</p>
+            ) : null}
             <input
               type="text"
               name="name"

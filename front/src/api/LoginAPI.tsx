@@ -20,3 +20,14 @@ export const RegisterAPI = function (registartData: any, callback: any) {
     callback(response.data);
   });
 };
+
+export const duplicateCheckAPI = function (registartId: any, callback: any) {
+  console.log('🚀registartId 값: ', registartId);
+  axios({
+    method: 'get',
+    url: `http://localhost:8001/api/register/duplicate/${registartId}`,
+  }).then(function (response) {
+    console.log('🚀중복체크 결과: ', response.data.result);
+    callback(response.data);
+  });
+};

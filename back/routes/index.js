@@ -34,7 +34,6 @@ router.post('/api/register', async (req, res, next) => {
       where: { storeName: store },
     });
     if (businessNumCheck) {
-      console.log('@@@', businessNumCheck);
       if (businessNumCheck.storeCode === code) {
         const hash = await bcrypt.hash(password, 12);
         await USER.create({
@@ -56,6 +55,28 @@ router.post('/api/register', async (req, res, next) => {
           message: '상점코드가 불일치 합니다.',
         });
       }
+    }
+  } catch (error) {
+    return next(error);
+  }
+});
+
+/* 회원가입 중복체크 */
+
+router.get('/api/register/duplicate/:id', async (req, res, next) => {
+  try {
+    const userCheck = await USER.findOne({ where: { userId: req.params.id } });
+    if (userCheck) {
+      req.flash('registerError', '이미 존재하는 아이디입니다.');
+      return res.status(200).json({
+        result: 'FAILURE',
+        message: '이미 존재하는 아이디입니다.',
+      });
+    } else {
+      return res.status(200).json({
+        result: 'SUCCESS',
+        message: '사용가능한 아이디입니다.',
+      });
     }
   } catch (error) {
     return next(error);

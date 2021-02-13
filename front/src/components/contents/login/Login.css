@@ -96,3 +96,32 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
 }
+
+#signUp-id-input {
+  width: 50%;
+  float: left;
+}
+
+#signUp-idCheck {
+  display: inline-block;
+  margin: 0 0 15px;
+  padding: 6% 0;
+  width: 45%;
+  height: 52px;
+  text-align: center;
+  background-color: #d9d9d9;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+#signUp-idCheck:hover {
+  background-color: #dfdfdf;
+}
+
+#idCheck-success {
+  color: #43A047;
+}
+
+#idCheck-failure {
+  color: #ff4d4f;
+}
