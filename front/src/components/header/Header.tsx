@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import Avatar from './Avatar';
@@ -7,6 +8,7 @@ import Avatar from './Avatar';
 import './Header.css';
 
 const Header = (userRefresh: any) => {
+  const { loginData } = useSelector((state: any) => state.user);
   const [focusMenu, setFousMenu] = useState(
     window.location.pathname === '/'
       ? ''
@@ -41,9 +43,11 @@ const Header = (userRefresh: any) => {
           <Menu.Item key="product">
             <Link to="/product">상품관리</Link>
           </Menu.Item>
-          <Menu.Item key="admin">
-            <Link to="/admin">관리자관리</Link>
-          </Menu.Item>
+          {!loginData.data.data.store ? (
+            <Menu.Item key="admin">
+              <Link to="/admin">관리자관리</Link>
+            </Menu.Item>
+          ) : null}
         </Menu>
         <div className="header-avatar">
           <Avatar

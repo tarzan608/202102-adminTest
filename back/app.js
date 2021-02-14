@@ -20,7 +20,6 @@ passportConfig(passport);
 app.set('port', process.env.PORT || 8001);
 
 app.use(morgan('dev'));
-
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

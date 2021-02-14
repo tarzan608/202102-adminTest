@@ -125,3 +125,15 @@ body {
 #idCheck-failure {
   color: #ff4d4f;
 }
+
+#codeSend-btn {
+  margin-bottom: 15px;
+  padding: 5px 0;
+  height: 30px;
+  background-color: #d9d9d9;
+  cursor: pointer;
+}
+
+#codeSend-btn:hover {
+  background-color: #dfdfdf;
+}

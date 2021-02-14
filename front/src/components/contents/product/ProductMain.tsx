@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as moment from 'moment';
+import { useSelector } from 'react-redux';
 import HeaderComponent from '../../header/Header';
 import {
   productListAPI,
@@ -19,6 +20,7 @@ const { confirm } = Modal;
 const { Column } = Table;
 
 const ProductMain = () => {
+  const { loginData } = useSelector((state: any) => state.user);
   const [list, setList] = React.useState();
   const [total, setTotal] = React.useState();
   const [checkData, setCheckData] = React.useState([]);
@@ -143,9 +145,14 @@ const ProductMain = () => {
       });
       await setTotal(total);
 
-      // const sortList = res.filter((product:any) => product.status === '');
-
-      setList(res);
+      if (!loginData.data.data.store) {
+        setList(res);
+      } else {
+        const sortList = res.filter(
+          (user: any) => user.brand === loginData.data.data.store
+        );
+        setList(sortList);
+      }
     });
   }, [option, refresh]);
 

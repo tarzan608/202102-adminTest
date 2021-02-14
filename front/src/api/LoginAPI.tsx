@@ -31,3 +31,14 @@ export const duplicateCheckAPI = function (registartId: any, callback: any) {
     callback(response.data);
   });
 };
+
+export const codeCheckAPI = function (email: string, callback: any) {
+  axios({
+    method: 'post',
+    url: `http://localhost:8001/api/register/emailSend/${email}`,
+    data: email,
+  }).then(function (response) {
+    console.log('🚀이메일 전송 결과: ', response.data);
+    callback(response.data);
+  });
+};

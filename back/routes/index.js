@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const { smtpTransport } = require('../config/email');
 const { USER, MEMBER, STORE, PRODUCT } = require('../models');
 
 const router = express.Router();
@@ -50,11 +51,17 @@ router.post('/api/register', async (req, res, next) => {
         });
       } else {
         req.flash('createError', '상점코드가 불일치 합니다.');
-        return res.status(401).json({
+        return res.status(200).json({
           result: 'FAILURE',
           message: '상점코드가 불일치 합니다.',
         });
       }
+    } else {
+      req.flash('createError', '해당 상점은 존재하지 않습니다.');
+      return res.status(200).json({
+        result: 'FAILURE',
+        message: '존재하지 않는 상점입니다.',
+      });
     }
   } catch (error) {
     return next(error);
@@ -83,12 +90,38 @@ router.get('/api/register/duplicate/:id', async (req, res, next) => {
   }
 });
 
+/* 이메일 인증 */
+
+router.post('/api/register/emailSend/:email', async (req, res, next) => {
+  try {
+    const { email } = req.params;
+    const ranStr = Math.random().toString(36).substr(5, 10);
+
+    const mailOptions = {
+      from: process.env.USER,
+      to: email,
+      subject: '[관리자 가입] 이메일 인증 입니다.]',
+      text: `이메일 코드는 우측에 있습니다. [${ranStr}]`,
+    };
+
+    await smtpTransport.sendMail(mailOptions, (error, responses) => {
+      if (error) {
+        res.json({ msg: 'err' });
+      } else {
+        res.json({ msg: 'sucess', result: ranStr });
+      }
+      smtpTransport.close();
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 /* 로그인, 로그아웃 API */
 
 router.post('/api/login', (req, res, next) => {
   passport.authenticate('local', (authError, user, info) => {
     if (authError) {
-      console.error(authError);
       return next(authError);
     }
     if (info) {
@@ -104,7 +137,6 @@ router.post('/api/login', (req, res, next) => {
     return req.login(user, async loginError => {
       try {
         if (loginError) {
-          console.error(loginError);
           return next(loginError);
         }
         const fullUser = await USER.findOne({
@@ -401,7 +433,6 @@ router.post('/api/product', (req, res, next) => {
 /* 상품 관련(추가) */
 
 router.post('/api/product/create', async (req, res, next) => {
-  console.log('상품관련 정보: ', req.body);
   const {
     productId,
     name,

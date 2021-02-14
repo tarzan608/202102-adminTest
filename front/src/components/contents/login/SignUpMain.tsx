@@ -2,7 +2,11 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import './Login.css';
-import { RegisterAPI, duplicateCheckAPI } from '../../../api/loginAPI';
+import {
+  RegisterAPI,
+  duplicateCheckAPI,
+  codeCheckAPI,
+} from '../../../api/loginAPI';
 import { message } from 'antd';
 
 const Registart = (props: any) => {
@@ -12,20 +16,32 @@ const Registart = (props: any) => {
     passwordCheck: '',
     name: '',
     email: '',
+    emailCheck: '',
     store: '',
     code: '',
   });
   const [idCheck, setIdCheck] = React.useState(null);
   const [passwordCheck, setPasswordCheck] = React.useState(null);
+  const [emailCheck, setEmailCheck] = React.useState(null);
+  const [emailCode, setEmailCode] = React.useState(null);
+  const [emailSuccess, setEmailSuccess] = React.useState(null);
   const onClick = () => {
-    RegisterAPI(registartData, function (res: any) {
-      if (res.result === 'SUCCESS') {
-        message.success('회원가입에 성공하였습니다.');
-        props.history.push('/');
-      } else {
-        message.warning('회원가입에 실패하였습니다. 재시도해주세요');
-      }
-    });
+    if (
+      idCheck === 'SUCCESS' &&
+      passwordCheck === 'SUCCESS' &&
+      emailSuccess === 'SUCCESS'
+    ) {
+      RegisterAPI(registartData, function (res: any) {
+        if (res.result === 'SUCCESS') {
+          message.success('회원가입에 성공하였습니다.');
+          props.history.push('/');
+        } else {
+          message.warning('가입정보를 다시 확인해주세요');
+        }
+      });
+    } else {
+      message.error('아이디 중복체크 및 비밀번호를 확인해주세요');
+    }
   };
   const onChangeId = (e: any) => {
     setRegistartData({
@@ -44,7 +60,6 @@ const Registart = (props: any) => {
       ...registartData,
       passwordCheck: e.target.value,
     });
-    console.log(registartData);
     setPasswordCheck(
       registartData.password === e.target.value ? 'SUCCESS' : 'FAILURE'
     );
@@ -59,6 +74,17 @@ const Registart = (props: any) => {
     setRegistartData({
       ...registartData,
       email: e.target.value,
+    });
+    if (emailSuccess === 'SUCCESS') {
+      setEmailCheck(null);
+      setEmailCode(null);
+      setEmailSuccess(null);
+    }
+  };
+  const onChangeEmailCheck = (e: any) => {
+    setRegistartData({
+      ...registartData,
+      emailCheck: e.target.value,
     });
   };
   const onChangeStore = (e: any) => {
@@ -75,13 +101,23 @@ const Registart = (props: any) => {
   };
   const duplicateCheck = () => {
     duplicateCheckAPI(registartData.userId, function (res: any) {
-      console.log('결과: ', res);
       setIdCheck(res.result);
     });
   };
-  React.useEffect(() => {
-    console.log('리로딩!', idCheck === 'SUCCESS');
-  }, [idCheck]);
+  const codeSend = () => {
+    codeCheckAPI(registartData.email, function (res: any) {
+      setEmailCode(res.result);
+      setEmailCheck(true);
+    });
+  };
+  const codeCheck = () => {
+    if (emailCode === registartData.emailCheck) {
+      setEmailCheck(false);
+      setEmailSuccess('SUCCESS');
+    } else {
+      setEmailSuccess('FAILURE');
+    }
+  };
 
   return (
     <>
@@ -132,6 +168,31 @@ const Registart = (props: any) => {
               placeholder="이메일"
               onChange={onChangeEmail}
             />
+            {!emailCheck && !emailSuccess ? (
+              <div id="codeSend-btn" onClick={codeSend}>
+                인증코드 발송
+              </div>
+            ) : null}
+            {emailCheck ? (
+              <>
+                <input
+                  type="text"
+                  id="signUp-id-input"
+                  name="emailCode"
+                  placeholder="이메일 인증코드"
+                  onChange={onChangeEmailCheck}
+                />
+                <div id="signUp-idCheck" onClick={codeCheck}>
+                  인증 확인
+                </div>
+              </>
+            ) : null}
+            {emailSuccess === 'SUCCESS' ? (
+              <p id="idCheck-success">이메인 인증이 완료되었습니다.</p>
+            ) : emailSuccess === 'FAILURE' ? (
+              <p id="idCheck-failure">이메인 인증코드를 다시 확인해주세요.</p>
+            ) : null}
+
             <input
               type="text"
               name="store"
