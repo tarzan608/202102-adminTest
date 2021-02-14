@@ -242,6 +242,11 @@ const StoreMain = () => {
                     key="businessNum"
                   />
                   <Column
+                    title="가입코드"
+                    dataIndex="storeCode"
+                    key="storeCode"
+                  />
+                  <Column
                     title="가입일"
                     dataIndex="createdAt"
                     key="createdAt"
