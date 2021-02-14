@@ -45,3 +45,20 @@ npm run build
 ```sh
 미정
 ```
+
+### 테스트 데이터 추가 방법
+
+2. back
+
+```sh
+npx sequelize-cli db:migrate
+```
+
+### 테스트 계정
+
+1. front
+* 테스트 데이터 추가 후 사용가능
+```sh
+ID: admin
+PASSWORD: 0000
+```

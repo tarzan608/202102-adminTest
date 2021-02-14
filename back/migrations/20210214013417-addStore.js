@@ -146,17 +146,6 @@ module.exports = {
         createdAt: '2021-02-09 12:41:49',
         updatedAt: '2021-02-09 12:41:49',
       },
-      {
-        storeId: 'amdo132mdo1266',
-        storeName: '발렌시아',
-        storeCode: 'code45',
-        userName: '이강인',
-        address: '경기도 용인시',
-        tel: '010123414118',
-        businessNum: '712291234560',
-        createdAt: '2021-02-09 12:41:49',
-        updatedAt: '2021-02-09 12:41:49',
-      },
     ]);
   },
 

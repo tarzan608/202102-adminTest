@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       storeCode: {
         type: DataTypes.STRING(20),
         allowNull: false,
-        unique: true,
       },
       userName: {
         type: DataTypes.STRING(20),
@@ -28,12 +27,11 @@ module.exports = (sequelize, DataTypes) => {
       tel: {
         type: DataTypes.STRING(20),
         allowNull: false,
-        unique: true,
       },
       businessNum: {
         type: DataTypes.STRING(100),
         allowNull: false,
-        unique: true,
+        // unique: true,
       },
     },
     {

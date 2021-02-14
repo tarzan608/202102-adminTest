@@ -12,13 +12,13 @@
     "password": "0000",
     "database": "admin",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "3306"
   },
   "production": {
     "username": "root",
     "password": "0000",
     "database": "admin",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "3306"
   }
 }
