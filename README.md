@@ -1,4 +1,4 @@
-# partner-admin-web
+# admin-web
 관리자 페이지(WEB)
 
 ### 1. frontend
