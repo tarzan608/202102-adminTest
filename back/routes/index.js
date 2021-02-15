@@ -165,6 +165,21 @@ router.post('/api/logout', (req, res) => {
   });
 });
 
+/* 로그인 관련(카카오) */
+router.get('/api/kakao', (req, res) => {
+  passport.authenticate('kakao');
+});
+
+router.get(
+  '/api/kakao/callback',
+  passport.authenticate('kakao', {
+    failureRedirect: '/',
+  }),
+  (req, res) => {
+    res.redirect('/');
+  }
+);
+
 /* 사용자 관련(조회) */
 
 router.post('/api/member', (req, res, next) => {

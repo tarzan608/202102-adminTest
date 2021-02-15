@@ -28,6 +28,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
+      snsId: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      provider: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
     },
     {
       charset: 'utf8',
